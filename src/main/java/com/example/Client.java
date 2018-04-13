@@ -5,6 +5,11 @@
  */
 package com.example;
 
+import java.net.MalformedURLException;
+import java.io.*; 
+import java.net.*; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author danie
@@ -20,8 +25,28 @@ public class Client extends Thread{
     
     @Override
     public void run(){
-        
+        try{
+            resultado("/");
+            resultado("/hello");            
+            resultado("/db");                        
+        } catch(MalformedURLException e){
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, e);
+            
+        }
     
+    }
+    
+    public void resultado(String tipo) throws MalformedURLException{
+        URL result = new URL("https://aremparcial2.herokuapp.compathHeroku"+tipo);
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(result.openStream()))) {
+            String inputLine = null;
+            while ((inputLine = reader.readLine()) != null) {
+                System.out.println(inputLine);
+            }
+        } catch (IOException x) {
+            System.err.println(x);
+        }            
     }
     
 }
