@@ -33,6 +33,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @SpringBootApplication
@@ -51,6 +54,16 @@ public class Main {
   @RequestMapping("/")
   String index() {
     return "index";
+  }
+  
+  @RequestMapping("/hello")
+  String hello() {
+    return "hello";
+  }
+  
+  @RequestMapping("/cuadrado")
+  ResponseEntity<?> cuadrado(@RequestParam("num") int num){
+    return new ResponseEntity<>("valor: "+num+",cuadrado: "+num*num+"}", HttpStatus.ACCEPTED);
   }
 
   @RequestMapping("/db")
